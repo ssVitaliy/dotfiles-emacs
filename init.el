@@ -24,11 +24,14 @@
 ;(load-theme 'modus-operandi)            ; Light theme
 (load-theme 'modus-vivendi)             ; Dark theme
 
+;;; Custom functions
+;; vs-funcs
 (defun vs-new-line-from-anyware ()
   "Jump to newline from anywhare in line"
   (interactive)
   (move-end-of-line 1)
   (newline))
+
 
 (defun vs-select-current-line-and-forward-line (arg)
   "Select the current line and move the cursor by ARG lines IF
@@ -36,12 +39,39 @@ no region is selected.
 
 If a region is already selected when calling this command, only move
 the cursor by ARG lines."
+
   (interactive "p")
   (when (not (use-region-p))
     (forward-line 0)
     (set-mark-command nil))
   (forward-line arg))
 
+
+(defun vs-copy-selection-or-current-line ()
+  "Copy selection (kill-ring-save) or whole current line if no region is selected."
+
+  (interactive)
+  (when (not (use-region-p))
+    (forward-line 0)
+    (set-mark-command nil)
+  (forward-line 1))
+  (kill-ring-save (region-beginning) (region-end))
+  )
+
+
+(defun vs-cut-selection-or-current-line ()
+  "Cut selection (kill-region) or whole current line if no region is selected."
+
+  (interactive)
+  (when (not (use-region-p))
+    (forward-line 0)
+    (set-mark-command nil)
+  (forward-line 1))
+  (kill-region (region-beginning) (region-end))
+  )
+
+
+;; xah-funcs
 (defun xah-extend-selection ()
   "Select the current word, bracket/quote expression, or expand selection.
 Subsequent calls expands the selection.
@@ -54,8 +84,8 @@ when there is a selection, the selection extension behavior is still experimenta
 
 URL `http://xahlee.info/emacs/emacs/emacs_extend_selection.html'
 Version: 2020-02-04 2023-08-24 2023-11-14"
-  (interactive)
 
+  (interactive)
   (cond
    ((region-active-p)
     (let ((xp1 (region-beginning)) (xp2 (region-end)))
@@ -180,10 +210,19 @@ Version: 2025-02-05"
   :global t
   :lighter " vskeys"
   :keymap (let ((vskeys-mode-map (make-sparse-keymap)))
+  ; edit
   (keymap-set vskeys-mode-map "S-<return>" #'vs-new-line-from-anyware)
-  (keymap-set vskeys-mode-map "M-l" #'vs-select-current-line-and-forward-line)
+  ; search
   (keymap-set vskeys-mode-map "M-8" #'xah-extend-selection)
+  ; select, copy, paste
+  (keymap-set vskeys-mode-map "M-l" #'vs-select-current-line-and-forward-line)
   (keymap-set vskeys-mode-map "M-s M-s" #'xah-search-current-word)
+
+  (keymap-set vskeys-mode-map "M-w M-w" #'vs-copy-selection-or-current-line)
+  (keymap-set vskeys-mode-map "M-w M-q" #'vs-cut-selection-or-current-line)
+  (keymap-set vskeys-mode-map "M-w M-e" #'yank)
+  (keymap-set vskeys-mode-map "M-w M-r" #'yank-pop)
+
 
   ;;; switch window, another window, next-window
   (keymap-set vskeys-mode-map "M-2" #'other-window)
