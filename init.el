@@ -283,15 +283,16 @@ Version: 2025-02-05"
   :config
   (setq vertico-cycle t)
   (setq vertico-resize nil)
-  (vertico-mode 1))
+  (vertico-mode 1)
+  ;; tidy directory, clear old path
+  (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
+
 
 ;; The built-in `savehist-mode' saves minibuffer histories.  Vertico
 ;; can then use that information to put recently selected options at
 ;; the top.
 (savehist-mode 1)
 
-;; tidy directory, clear old path
-(add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy)
 
 (use-package marginalia
   :config
