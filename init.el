@@ -5,7 +5,7 @@
 ;; consult
 ;; company
 ;; org
-
+;; vdiff
 
 (setq default-directory "~/")
 (setq inhibit-startup-screen t)
@@ -344,6 +344,14 @@ Version: 2025-02-05"
 	      ("C-c C-'" . org-mark-ring-goto)
 	      ("C-c C-;" . org-mark-ring-push)))
 
+
+;;; vdiff
+(use-package vdiff
+  :config
+  (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
+  :bind (
+	 :map vdiff-mode-map
+              ("M-2" . vdiff-switch-buffer)))
 
 ;; ;; denote package
 ;; (setq denote-directory (expand-file-name "~/odis-api/"))
