@@ -298,9 +298,6 @@ Version: 2025-02-05"
   :config
   (marginalia-mode 1))
 
-(use-package orderless
-  :config
-  (setq completion-styles '(orderless basic)))
 
 (use-package consult
   :config
@@ -319,6 +316,12 @@ Version: 2025-02-05"
          ;; opened file.
          ("M-s M-b" . consult-buffer)))
 
+
+(use-package orderless
+  :config
+  (setq completion-styles '(orderless basic)))
+
+
 (use-package company
   :init
   (global-company-mode)
@@ -326,14 +329,51 @@ Version: 2025-02-05"
   (company-mode)
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
-  (add-to-list 'company-backends 'company-dabbrev) ;; Backend for header files
+  ;; (add-to-list 'company-backends 'company-dabbrev) ;; Backend for header files
   :bind (:map company-search-map  
               ("C-t" . company-search-toggle-filtering)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)
               :map company-active-map
+	      ("<tab>" . company-complete)
+	      ("<SPC>" . company-abort)
               ("C-n" . company-select-next)
               ("C-p" . company-select-previous)))
+
+
+(defun vs/company-prefix-aware-sorter (candidates)
+  "Sort candidates starting with prefix first, and filter :prefix unless needed."
+  (let ((prefix (company-grab-symbol)))
+    (if (string-prefix-p ":" prefix)
+        candidates  ; Keep all if prefix starts with ':'
+      ;; Else: filter ':' candidates and sort prefix matches first
+      (let ((filtered (cl-remove-if (lambda (c) 
+                                     (string-prefix-p ":" (if (consp c) (car c) c)))
+                                   candidates)))
+        (sort filtered (lambda (a b)
+                        (let ((a-str (if (consp a) (car a) a))
+                              (b-str (if (consp b) (car b) b)))
+                          ;; Prioritize prefix matches
+                          (cond
+                           ((and (string-prefix-p prefix a-str)
+                                 (not (string-prefix-p prefix b-str))) t)
+                           ((and (not (string-prefix-p prefix a-str))
+                                 (string-prefix-p prefix b-str)) nil)
+                           (t (string< a-str b-str))))))))))
+
+(add-to-list 'company-transformers 'vs/company-prefix-aware-sorter t)  ; Append to end
+
+
+;; (defun vs/company-after-prefix-filter-colon (candidates)
+;;   "Filter out candidates starting with ':' unless the prefix is ':'."
+;;   (let ((prefix (company-grab-symbol)))
+;;     (if (string-prefix-p ":" prefix)
+;;         candidates  ; Keep all candidates if prefix starts with ':'
+;;       (cl-remove-if (lambda (c) (string-prefix-p ":" (if (consp c) (car c) c)))
+;;                    candidates))))
+
+;; (add-to-list 'company-transformers 'vs/company-after-prefix-filter-colon)
+
 
 ; Org mode
 (use-package org
