@@ -229,9 +229,9 @@ Version: 2025-02-05"
   ;;; split window vertically
   (keymap-set vskeys-mode-map "M-3" #'split-window-right)
   ;;; delete window
-  (keymap-set vskeys-mode-map "M-0 M-0" #'delete-window)
+  (keymap-set vskeys-mode-map "M-0 M--" #'delete-window)
   ;;; delete other windows
-  (keymap-set vskeys-mode-map "M-0 M--" #'delete-other-windows)
+  (keymap-set vskeys-mode-map "M-0 M-0" #'delete-other-windows)
 
   (keymap-set vskeys-mode-map "C-v" #'yank)
   (keymap-set vskeys-mode-map "C-z" #'undo)
