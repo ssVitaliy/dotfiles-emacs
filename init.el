@@ -361,7 +361,7 @@ Version: 2025-02-05"
                                  (string-prefix-p prefix b-str)) nil)
                            (t (string< a-str b-str))))))))))
 
-(add-to-list 'company-transformers 'vs/company-prefix-aware-sorter t)  ; Append to end
+(add-to-list 'company-transformers 'vs/company-prefix-aware-sorter)  ; Append to end
 
 
 ;; (defun vs/company-after-prefix-filter-colon (candidates)
