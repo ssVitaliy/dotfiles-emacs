@@ -4,8 +4,11 @@
 ;; orderless
 ;; consult
 ;; company
+;; company-flx
+;; company-statistics
 ;; org
 ;; vdiff
+
 
 (setq default-directory "~/")
 (setq inhibit-startup-screen t)
@@ -330,6 +333,14 @@ Version: 2025-02-05"
   (setq company-idle-delay 0)
   (setq company-global-modes '(not processing-mode text-mode)) ;; Not use company on those modes
   ;; (add-to-list 'company-backends 'company-dabbrev) ;; Backend for header files
+
+  ;; Add space when finish completion with '<SPC>' - aka abort.
+  (add-hook 'company-after-completion-hook
+            (lambda (&rest _)
+	      ;; if the last key pressed was a space character
+              (when (eq last-command-event ?\s)
+		(insert " "))))
+  
   :bind (:map company-search-map  
               ("C-t" . company-search-toggle-filtering)
               ("C-n" . company-select-next)
@@ -363,6 +374,19 @@ Version: 2025-02-05"
 
 (add-to-list 'company-transformers 'vs/company-prefix-aware-sorter)  ; Append to end
 
+
+(use-package company-flx
+  :after company
+  :config
+  (company-flx-mode)
+  (setq company-flx-make-weights '(:prefix 0.8 :substring 0.7 :flex 0.5)))
+
+
+(use-package company-statistics
+  :after company
+  :config
+  (company-statistics-mode))
+  
 
 ;; (defun vs/company-after-prefix-filter-colon (candidates)
 ;;   "Filter out candidates starting with ':' unless the prefix is ':'."
