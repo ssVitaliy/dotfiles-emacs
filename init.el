@@ -318,3 +318,34 @@ This includes major mode and other minor mode keybindings."
   ;; Only use two buffers (working file and index) for vdiff-magit-stage
   (setq vdiff-magit-stage-is-2way t)
   )
+
+
+;;; Evil mode
+;;; Vim Bindings
+(use-package evil
+  :demand t
+  :bind (("<escape>" . keyboard-escape-quit))
+  :init
+  ;; allows for using cgn
+  ;; (setq evil-search-module 'evil-search)
+  (setq evil-want-keybinding nil)
+  (setq evil-undo-system 'undo-redo)
+  :config
+  (evil-mode 1))
+  (setq evil-move-cursor-back nil)
+
+(use-package key-chord
+  :after evil
+  :config
+;;Exit insert mode by pressing j and then k quickly
+  (setq key-chord-two-keys-delay 0.2)
+  (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-mode 1))
+  
+;;; Vim Bindings Everywhere else
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init))
+
