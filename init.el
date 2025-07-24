@@ -9,6 +9,9 @@
 ;; org
 ;; vdiff
 
+;;; Set window size
+(setq default-frame-alist
+      '((width . 180) (height . 52)))
 
 (setq default-directory "~/")
 (setq inhibit-startup-screen t)
