@@ -331,8 +331,14 @@ This includes major mode and other minor mode keybindings."
   (setq evil-want-keybinding nil)
   (setq evil-undo-system 'undo-redo)
   :config
-  (evil-mode 1))
   (setq evil-move-cursor-back nil)
+  ;; Do not touch 'magit'
+  (with-eval-after-load 'magit
+    (evil-set-initial-state 'magit-status-mode 'emacs)
+    (evil-set-initial-state 'magit-log-mode 'emacs)
+    (evil-set-initial-state 'magit-process-mode 'emacs)
+    (evil-set-initial-state 'magit-diff-mode 'emacs))
+  (evil-mode 1))
 
 (use-package key-chord
   :after evil
