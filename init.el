@@ -452,3 +452,10 @@ Version: 2025-02-05"
 
 (keymap-set vskeys-mode-map "M-t" 'toggle-window-split)
 
+(use-package magit
+  :config
+  (unbind-key "M-2" magit-status-mode-map)
+  (unbind-key "M-3" magit-status-mode-map)
+  (unbind-key "M-2" magit-stash-mode-map)
+  (unbind-key "M-3" magit-stash-mode-map))
+
