@@ -330,8 +330,12 @@ This includes major mode and other minor mode keybindings."
   ;; (setq evil-search-module 'evil-search)
   (setq evil-want-keybinding nil)
   (setq evil-undo-system 'undo-redo)
+  (setq evil-toggle-key "M-`")
   :config
   (setq evil-move-cursor-back nil)
+
+  (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . emacs))
+
   ;; Do not touch 'magit'
   (with-eval-after-load 'magit
     (evil-set-initial-state 'magit-status-mode 'emacs)
