@@ -97,7 +97,17 @@ This includes major mode and other minor mode keybindings."
                   emulation-mode-map-alists))
     (setq minor-mode-map-alist
           (assq-delete-all 'vs-minor-mode minor-mode-map-alist))))
+
+;; Activate mode
 (vs-minor-mode)
+
+
+(defun reactivate-vs-minor-mode ()
+  "Force reactivation of vs-minor-mode."
+  (message "vs-minor-mode reactivated")
+  (when vs-minor-mode
+    (vs-minor-mode -1)
+    (vs-minor-mode 1)))
 
 
 ;;; grep
