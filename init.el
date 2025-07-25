@@ -267,3 +267,11 @@ This includes major mode and other minor mode keybindings."
 	 :map vdiff-mode-map
          ("M-2" . vdiff-switch-buffer)))
 
+
+;;; magit
+(use-package magit
+  :config
+  (keymap-unset magit-status-mode-map "M-2")
+  (keymap-unset magit-status-mode-map "M-3")
+  (keymap-unset magit-stash-mode-map "M-2")
+  (keymap-unset magit-stash-mode-map "M-3"))
