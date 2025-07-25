@@ -321,41 +321,42 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Evil mode
-;;; Vim Bindings
 (use-package evil
   :demand t
   :bind (("<escape>" . keyboard-escape-quit))
   :init
-  ;; allows for using cgn
-  ;; (setq evil-search-module 'evil-search)
-  (setq evil-want-keybinding nil)
+  (setq evil-want-keybinding nil) ; for evil-collection
   (setq evil-undo-system 'undo-redo)
   (setq evil-toggle-key "M-`")
-  :config
   (setq evil-move-cursor-back nil)
-
+  :config
+  ;; Commit message buffer in 'emacs' mode
   (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . emacs))
-
-  ;; Do not touch 'magit'
-  (with-eval-after-load 'magit
-    (evil-set-initial-state 'magit-status-mode 'emacs)
-    (evil-set-initial-state 'magit-log-mode 'emacs)
-    (evil-set-initial-state 'magit-process-mode 'emacs)
-    (evil-set-initial-state 'magit-diff-mode 'emacs))
   (evil-mode 1))
 
 (use-package key-chord
   :after evil
   :config
-;;Exit insert mode by pressing j and then k quickly
+  ;;Exit insert mode by pressing j and then k quickly
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
   (key-chord-mode 1))
   
-;;; Vim Bindings Everywhere else
+
+;;; evil-collection - vim bindings everywhere
 (use-package evil-collection
   :after evil
   :config
   (setq evil-want-integration t)
-  (evil-collection-init))
+  (evil-collection-init)
+  
+  ;; Do not touch 'magit'
+  (evil-set-initial-state 'magit-diff-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-status-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-log-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-process-mode 'emacs)
+
+  ;; Override with my keys
+  (reactivate-vs-minor-mode)
+  )
 
