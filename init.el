@@ -329,6 +329,10 @@ This includes major mode and other minor mode keybindings."
   (setq evil-undo-system 'undo-redo)
   (setq evil-toggle-key "M-`")
   (setq evil-move-cursor-back nil)
+  (setq evil-want-C-u-scroll t)
+  ;; Default state
+  (setq evil-default-state 'emacs)
+  
   :config
   ;; Commit message buffer in 'emacs' mode
   (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . emacs))
@@ -340,8 +344,11 @@ This includes major mode and other minor mode keybindings."
   (setq evil-replace-state-cursor '("#ff9c75" hbar)) ; light red
   (setq evil-operator-state-cursor '("#ff9c75" (hbar . 10))) ; light red
   (setq evil-emacs-state-cursor '("#75e6ff" box)) ; light blue
-  
-  (evil-mode 1))
+
+  ;; Activate mode
+  (evil-mode t)
+  )
+
 
 (use-package key-chord
   :after evil
@@ -352,20 +359,20 @@ This includes major mode and other minor mode keybindings."
   (key-chord-mode 1))
   
 
-;;; evil-collection - vim bindings everywhere
-(use-package evil-collection
-  :after evil
-  :config
-  (setq evil-want-integration t)
-  (evil-collection-init)
+;; ;;; evil-collection - vim bindings everywhere
+;; (use-package evil-collection
+;;   :after evil
+;;   :config
+;;   (setq evil-want-integration t)
+;;   (evil-collection-init)
   
-  ;; Do not touch 'magit'
-  (evil-set-initial-state 'magit-diff-mode 'emacs)
-  ;; (evil-set-initial-state 'magit-status-mode 'emacs)
-  ;; (evil-set-initial-state 'magit-log-mode 'emacs)
-  ;; (evil-set-initial-state 'magit-process-mode 'emacs)
+;;   ;; Do not touch 'magit'
+;;   (evil-set-initial-state 'magit-diff-mode 'emacs)
+;;   ;; (evil-set-initial-state 'magit-status-mode 'emacs)
+;;   ;; (evil-set-initial-state 'magit-log-mode 'emacs)
+;;   ;; (evil-set-initial-state 'magit-process-mode 'emacs)
 
-  ;; Override with my keys
-  (reactivate-vs-minor-mode)
-  )
+;;   ;; Override with my keys
+;;   (reactivate-vs-minor-mode)
+;;   )
 
