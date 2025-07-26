@@ -332,6 +332,15 @@ This includes major mode and other minor mode keybindings."
   :config
   ;; Commit message buffer in 'emacs' mode
   (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . emacs))
+
+  ;; Set cursor color
+  (setq evil-normal-state-cursor '("#ff9c75" box)) ; light red
+  (setq evil-insert-state-cursor '("#ff9c75" bar)) ; light red
+  (setq evil-visual-state-cursor '("#ff9c75" hollow)) ; light red
+  (setq evil-replace-state-cursor '("#ff9c75" hbar)) ; light red
+  (setq evil-operator-state-cursor '("#ff9c75" (hbar . 10))) ; light red
+  (setq evil-emacs-state-cursor '("#75e6ff" box)) ; light blue
+  
   (evil-mode 1))
 
 (use-package key-chord
