@@ -327,23 +327,28 @@ This includes major mode and other minor mode keybindings."
   :init
   (setq evil-want-keybinding nil) ; for evil-collection
   (setq evil-undo-system 'undo-redo)
-  (setq evil-toggle-key "M-`")
+  (setq evil-toggle-key "M-t")
   (setq evil-move-cursor-back nil)
   (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-w-in-emacs-state t)
   ;; Default state
-  (setq evil-default-state 'emacs)
+  (setq evil-default-state 'normal)
   
   :config
   ;; Commit message buffer in 'emacs' mode
-  (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . emacs))
+  (add-to-list 'evil-buffer-regexps '("COMMIT_EDITMSG" . insert))
+  ;; Set <leader>
+  (evil-set-leader  '(normal visual) (kbd "SPC"))
 
   ;; Set cursor color
-  (setq evil-normal-state-cursor '("#ff9c75" box)) ; light red
-  (setq evil-insert-state-cursor '("#ff9c75" bar)) ; light red
-  (setq evil-visual-state-cursor '("#ff9c75" hollow)) ; light red
-  (setq evil-replace-state-cursor '("#ff9c75" hbar)) ; light red
-  (setq evil-operator-state-cursor '("#ff9c75" (hbar . 10))) ; light red
-  (setq evil-emacs-state-cursor '("#75e6ff" box)) ; light blue
+  (defconst evil-cursor-color-red "#ff9c75") ; light red
+  (defconst evil-cursor-color-blue "#75e6ff") ; light blue
+  (setq evil-normal-state-cursor `(,evil-cursor-color-red box)) 
+  (setq evil-insert-state-cursor `(,evil-cursor-color-red bar))
+  (setq evil-visual-state-cursor `(,evil-cursor-color-red hollow))
+  (setq evil-replace-state-cursor `(,evil-cursor-color-red hbar))
+  (setq evil-operator-state-cursor `(,evil-cursor-color-red (hbar . 10)))
+  (setq evil-emacs-state-cursor `(,evil-cursor-color-blue box))
 
   ;; Activate mode
   (evil-mode t)
@@ -356,23 +361,28 @@ This includes major mode and other minor mode keybindings."
   ;;Exit insert mode by pressing j and then k quickly
   (setq key-chord-two-keys-delay 0.2)
   (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+  (key-chord-define evil-replace-state-map "jk" 'evil-normal-state)
+
+  ;; Comment line
+  (key-chord-define evil-normal-state-map "gc" 'comment-line)
+
   (key-chord-mode 1))
   
 
-;; ;;; evil-collection - vim bindings everywhere
-;; (use-package evil-collection
-;;   :after evil
-;;   :config
-;;   (setq evil-want-integration t)
-;;   (evil-collection-init)
+;;; evil-collection - vim bindings everywhere
+(use-package evil-collection
+  :after evil
+  :config
+  (setq evil-want-integration t)
+  (evil-collection-init)
   
-;;   ;; Do not touch 'magit'
-;;   (evil-set-initial-state 'magit-diff-mode 'emacs)
-;;   ;; (evil-set-initial-state 'magit-status-mode 'emacs)
-;;   ;; (evil-set-initial-state 'magit-log-mode 'emacs)
-;;   ;; (evil-set-initial-state 'magit-process-mode 'emacs)
+  ;; Do not touch 'magit'
+  ;; (evil-set-initial-state 'magit-diff-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-status-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-log-mode 'emacs)
+  ;; (evil-set-initial-state 'magit-process-mode 'emacs)
 
-;;   ;; Override with my keys
-;;   (reactivate-vs-minor-mode)
-;;   )
+  ;; Override with my keys
+  ;; (reactivate-vs-minor-mode)
+  )
 
