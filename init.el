@@ -28,6 +28,9 @@
 (setq auto-save-default nil)
 ;; Do not create backup files
 (setq make-backup-files nil)
+;; Dont beep
+(setq ring-bell-function 'ignore)
+
 
 ;; Theme
 (load-theme 'modus-vivendi)     ; Dark theme
