@@ -350,6 +350,12 @@ This includes major mode and other minor mode keybindings."
   (setq evil-operator-state-cursor `(,evil-cursor-color-red (hbar . 10)))
   (setq evil-emacs-state-cursor `(,evil-cursor-color-blue box))
 
+  (unless (display-graphic-p)
+      (add-hook 'evil-normal-state-entry-hook (lambda () (send-string-to-terminal "\e[2 q\e]12;rgb:ff/9c/75\e\\"))) ; red block
+      (add-hook 'evil-insert-state-entry-hook (lambda () (send-string-to-terminal "\e[6 q"))) ; vertical bar
+      (add-hook 'evil-operator-state-entry-hook (lambda () (send-string-to-terminal "\e[4 q")))   ; underline
+      (add-hook 'evil-emacs-state-entry-hook (lambda () (send-string-to-terminal "\e[2 q\e]12;rgb:75/e6/ff\e\\")))    ; blue block
+  )
   ;; Activate mode
   (evil-mode t)
   )
