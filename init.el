@@ -258,10 +258,10 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Company-statistics
-(use-package company-statistics
-  :after company
-  :config
-  (company-statistics-mode))
+;; (use-package company-statistics
+;;   :after company
+;;   :config
+;;   (company-statistics-mode))
   
 
 ;;; Org mode
