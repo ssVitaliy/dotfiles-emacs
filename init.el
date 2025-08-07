@@ -289,7 +289,9 @@ This includes major mode and other minor mode keybindings."
   (keymap-unset magit-status-mode-map "M-2")
   (keymap-unset magit-status-mode-map "M-3")
   (keymap-unset magit-stash-mode-map "M-2")
-  (keymap-unset magit-stash-mode-map "M-3"))
+  (keymap-unset magit-stash-mode-map "M-3")
+  (keymap-set global-map "M-`" #'magit-status)
+  )
 
 
 (use-package vdiff-magit
