@@ -144,7 +144,7 @@ This includes major mode and other minor mode keybindings."
 
 ;;; Config packages ;;;
 
-;; Package archives addresses
+;;; Package archives addresses
 (setq package-archives
 	'(("gnu" . "https://elpa.gnu.org/packages/")
 	  ("melpa" . "https://melpa.org/packages/")
@@ -153,6 +153,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Vertico
+(message "Load: vertico")
 (use-package vertico
   :config
   (setq vertico-cycle t)
@@ -168,12 +169,14 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Marginalia
+(message "Load: marginalia")
 (use-package marginalia
   :config
   (marginalia-mode 1))
 
 
 ;;; Consult
+(message "Load: consult")
 (use-package consult
   :config
   (setq register-preview-delay 0.8
@@ -193,12 +196,14 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Orderless
+(message "Load: orderless")
 (use-package orderless
   :config
   (setq completion-styles '(orderless basic)))
 
 
 ;;; Company
+(message "Load: company")
 (use-package company
   :init
   (global-company-mode)
@@ -250,6 +255,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Company-flx
+(message "Load: company-flx")
 (use-package company-flx
   :after company
   :config
@@ -258,6 +264,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Company-statistics
+(message "Load: company-statistics")
 ;; (use-package company-statistics
 ;;   :after company
 ;;   :config
@@ -265,6 +272,7 @@ This includes major mode and other minor mode keybindings."
   
 
 ;;; Org mode
+(message "Load: org")
 (use-package org
   :config 
   (setq org-log-done 'time)
@@ -275,6 +283,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; vdiff
+(message "Load: vdiff")
 (use-package vdiff
   :config
   (define-key vdiff-mode-map (kbd "C-c") vdiff-mode-prefix-map)
@@ -284,6 +293,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; magit + vdiff
+(message "Load: magit")
 (use-package magit
   :config
   (keymap-unset magit-status-mode-map "M-2")
@@ -294,6 +304,8 @@ This includes major mode and other minor mode keybindings."
   )
 
 
+;;; vdiff-magit
+(message "Load: vdiff-magit")
 (use-package vdiff-magit
   :after magit
   :config
@@ -321,6 +333,7 @@ This includes major mode and other minor mode keybindings."
 
 
 ;;; Evil mode
+(message "Load: evil")
 (use-package evil
   :demand t
   :bind (("<escape>" . keyboard-escape-quit))
@@ -361,6 +374,8 @@ This includes major mode and other minor mode keybindings."
   )
 
 
+;;; key-chord
+(message "Load: key-chord")
 (use-package key-chord
   :after evil
   :config
@@ -376,6 +391,7 @@ This includes major mode and other minor mode keybindings."
   
 
 ;;; evil-collection - vim bindings everywhere
+(message "Load: evil-collection")
 (use-package evil-collection
   :after evil
   :config
